@@ -1,45 +1,35 @@
-function wat(req, res) {
-  res.json({
-    test: "WAT",
-    count: 60,
-    items: []
-  });
+const contentService = require('../services/content.service');
+
+async function wat(req, res, next) {
+  try {
+    const items = await contentService.getWAT();
+    res.json({ test: "WAT", count: items.length, items });
+  } catch (err) { next(err); }
 }
 
-function srt(req, res) {
-  res.json({
-    test: "SRT",
-    count: 60,
-    items: []
-  });
+async function srt(req, res, next) {
+  try {
+    const items = await contentService.getSRT();
+    res.json({ test: "SRT", count: items.length, items });
+  } catch (err) { next(err); }
 }
 
-function tat(req, res) {
-  res.json({
-    test: "TAT",
-    items: []
-  });
+async function tat(req, res, next) {
+  try {
+    const items = await contentService.getTAT();
+    res.json({ test: "TAT", items });
+  } catch (err) { next(err); }
 }
 
 function sdt(req, res) {
-  res.json({
-    test: "SDT",
-    headings: []
-  });
+  res.json({ test: "SDT", headings: contentService.getSDT() });
 }
 
-function lecturette(req, res) {
-  res.json({
-    test: "LECTURETTE",
-    count: 4,
-    topics: []
-  });
+async function lecturette(req, res, next) {
+  try {
+    const topics = await contentService.getLecturette();
+    res.json({ test: "LECTURETTE", count: topics.length, topics });
+  } catch (err) { next(err); }
 }
 
-module.exports = {
-  wat,
-  srt,
-  tat,
-  sdt,
-  lecturette
-};
+module.exports = { wat, srt, tat, sdt, lecturette };
