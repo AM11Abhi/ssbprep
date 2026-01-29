@@ -116,7 +116,7 @@ html, body {
 }
 
 .hero-content .heading-xl {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .hero-content .text-description {
@@ -137,7 +137,7 @@ html, body {
   width: 265px;
   height: 293px;
   object-fit: contain;
-  filter: invert(1) brightness(0.85);
+
 }
 
 /* Practice Section */
@@ -147,14 +147,19 @@ html, body {
 }
 
 .section-title {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.25rem;
-  font-weight: 600;
   text-transform: lowercase;
   margin-bottom: 24px;
   color: var(--text-primary);
 }
 
 .practice-pills {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 100;
+  font-style: normal;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -176,13 +181,18 @@ html, body {
 }
 
 .benefits-title {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.125rem;
-  font-weight: 600;
   margin-bottom: 16px;
   color: var(--text-primary);
 }
 
 .benefits-list {
+  font-family: "Battambang", system-ui;
+  font-weight: 400;
+  font-style: normal;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -231,11 +241,13 @@ html, body {
 
 /* Typography */
 .heading-xl {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 4rem;
-  font-weight: 700;
   text-transform: lowercase;
   letter-spacing: -0.02em;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .heading-lg {
@@ -253,6 +265,9 @@ html, body {
 }
 
 .text-description {
+  font-family: "Battambang", system-ui;
+  font-weight: 400;
+  font-style: normal;
   font-size: 15px;
   color: var(--text-secondary);
   max-width: 400px;
@@ -275,6 +290,11 @@ html, body {
 }
 
 .btn-primary {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  letter-spacing: 0.10em;
+  
   background-color: var(--accent-olive);
   color: var(--text-primary);
 }
