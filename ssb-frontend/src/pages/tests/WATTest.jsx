@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Timer from '../../components/Timer.jsx';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
@@ -17,6 +17,7 @@ function WATTest() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [usingMock, setUsingMock] = useState(false);
+  const completedRef = useRef(false);
 
   useFullscreen();
   usePreventBack(() => setShowDialog(true));
@@ -27,13 +28,13 @@ function WATTest() {
         const response = await fetch('http://localhost:3000/content/wat');
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
-        setWords(data.words || data);
+        console.log("WAT res:", data.items);
+        setWords(data.items || data);
         setLoading(false);
       } catch (err) {
         // TEMP MOCK DATA — REMOVE WHEN BACKEND IS RUNNING
         if (USE_MOCK_DATA) {
-          const mockWords = MOCK_WAT_DATA.items.map(item => item.word);
-          setWords(mockWords);
+          setWords(MOCK_WAT_DATA.items);
           setUsingMock(true);
           setLoading(false);
         } else {
@@ -46,12 +47,20 @@ function WATTest() {
   }, []);
 
   const handleWordComplete = useCallback(() => {
+    if (completedRef.current) return;
+    completedRef.current = true;
+
     if (currentIndex < words.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
       navigate('/completed');
     }
   }, [currentIndex, words.length, navigate]);
+
+  // Reset the ref when currentIndex changes
+  useEffect(() => {
+    completedRef.current = false;
+  }, [currentIndex]);
 
   const handleExit = () => {
     if (document.fullscreenElement) {
@@ -97,13 +106,13 @@ function WATTest() {
           paused={showDialog}
         />
         <div className="test-progress">
-          {currentIndex + 1} / {words.length}
+          {currentIndex +1} / {words.length}
         </div>
       </div>
 
       <div className="test-content">
         <div className="test-word">
-          {words[currentIndex]}
+          {words[currentIndex]?.word}
         </div>
       </div>
 
