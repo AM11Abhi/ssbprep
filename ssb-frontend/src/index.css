@@ -8,7 +8,7 @@
 }
 
 :root {
-  --bg-primary: #1a1a1a;
+  --bg-primary: #262525;
   --bg-secondary: #232323;
   --bg-card: #2d3748;
   --accent-olive: #5a6e4d;
@@ -58,12 +58,14 @@ html, body {
 }
 
 .navbar-link {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
   color: var(--text-primary);
   text-decoration: none;
   padding: 10px 28px;
   font-size: 14px;
-  font-weight: 500;
-  text-transform: lowercase;
   border-radius: var(--radius-pill);
   transition: none;
 }
@@ -149,6 +151,7 @@ html, body {
 .section-title {
   font-family: "Black Han Sans", sans-serif;
   font-weight: 400;
+  letter-spacing: 0.05em;
   font-style: normal;
   font-size: 1.25rem;
   text-transform: lowercase;
@@ -167,12 +170,16 @@ html, body {
 }
 
 .practice-pill {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
   background-color: #4D626D;
   color: var(--text-primary);
   padding: 10px 28px;
   border-radius: var(--radius-pill);
   font-size: 14px;
-  font-weight: 500;
+  
 }
 
 /* Benefits Section */
@@ -251,10 +258,12 @@ html, body {
 }
 
 .heading-lg {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 3rem;
-  font-weight: 700;
   text-transform: lowercase;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   margin-bottom: 24px;
 }
 

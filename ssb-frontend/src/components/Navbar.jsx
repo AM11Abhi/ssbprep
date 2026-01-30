@@ -10,19 +10,19 @@ function Navbar({ hidden = false }) {
           to="/" 
           className={({ isActive }) => `navbar-link ${isActive ? 'active' : ''}`}
         >
-          home
+          Home
         </NavLink>
         <NavLink 
           to="/practice" 
           className={({ isActive }) => `navbar-link ${isActive ? 'active' : ''}`}
         >
-          practice
+          Practice
         </NavLink>
         <NavLink 
           to="/about" 
           className={({ isActive }) => `navbar-link ${isActive ? 'active' : ''}`}
         >
-          about
+          About
         </NavLink>
       </div>
     </nav>
