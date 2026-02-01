@@ -27,9 +27,9 @@ export const MOCK_WAT_DATA = {
 export const MOCK_TAT_DATA = {
   testType: "TAT",
   items: [
-    { id: 1, code: "TAT_01", isBlank: false },
-    { id: 2, code: "TAT_02", isBlank: false },
-    { id: 3, code: "BLANK", isBlank: true }
+    { id: 1, code: "TAT_01", is_Blank: false },
+    { id: 2, code: "TAT_02", is_Blank: false },
+    { id: 3, code: "BLANK", is_Blank: true }
   ]
 };
 

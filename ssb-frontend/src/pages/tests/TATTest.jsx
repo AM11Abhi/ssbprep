@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback ,useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Timer from '../../components/Timer.jsx';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
@@ -9,7 +9,6 @@ import { USE_MOCK_DATA, MOCK_TAT_DATA } from '../../data/mockTestData.js';
 
 const OBSERVE_SECONDS = 30;
 const WRITE_SECONDS = 240;
-
 function TATTest() {
   const navigate = useNavigate();
   const [slides, setSlides] = useState([]);
@@ -19,6 +18,7 @@ function TATTest() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [usingMock, setUsingMock] = useState(false);
+  const phaseAdvanceRef = useRef(false);
 
   useFullscreen();
   usePreventBack(() => setShowDialog(true));
@@ -29,11 +29,13 @@ function TATTest() {
         const response = await fetch('http://localhost:3000/content/tat');
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
-        setSlides(data.slides || data);
+        console.log(data.items);
+        setSlides(data.items || data);
         setLoading(false);
       } catch (err) {
         // TEMP MOCK DATA — REMOVE WHEN BACKEND IS RUNNING
         if (USE_MOCK_DATA) {
+          console.log(MOCK_TAT_DATA.items)
           setSlides(MOCK_TAT_DATA.items);
           setUsingMock(true);
           setLoading(false);
@@ -46,18 +48,25 @@ function TATTest() {
     fetchSlides();
   }, []);
 
-  const handlePhaseComplete = useCallback(() => {
-    if (phase === 'observe') {
-      setPhase('write');
-    } else {
-      if (currentIndex < slides.length - 1) {
-        setCurrentIndex((prev) => prev + 1);
-        setPhase('observe');
+    const handlePhaseComplete = useCallback(() => {
+      if (phaseAdvanceRef.current) return;
+      phaseAdvanceRef.current = true;
+
+      if (phase === 'observe') {
+        setPhase('write');
       } else {
-        navigate('/completed');
+        if (currentIndex < slides.length - 1) {
+          setCurrentIndex((prev) => prev + 1);
+          setPhase('observe');
+        } else {
+          navigate('/completed');
+        }
       }
-    }
-  }, [phase, currentIndex, slides.length, navigate]);
+    }, [phase, currentIndex, slides.length, navigate]);
+
+    useEffect(() => {
+      phaseAdvanceRef.current = false;
+    }, [phase, currentIndex]);
 
   const handleExit = () => {
     if (document.fullscreenElement) {
@@ -90,7 +99,7 @@ function TATTest() {
   }
 
   const currentSlide = slides[currentIndex];
-  const isBlank = currentSlide?.isBlank;
+  const isBlank = currentSlide?.is_blank;
 
   return (
     <div className="test-container">
@@ -117,7 +126,11 @@ function TATTest() {
         
         {phase === 'observe' ? (
           isBlank ? (
-            <div className="test-word">blank slide</div>
+                        <img
+                src="/tat/BLANK.png"
+                alt="Blank TAT slide"
+                className="test-image"
+              />
           ) : usingMock ? (
             <div className="test-word" style={{ fontSize: '1.5rem', color: 'var(--text-secondary)' }}>
               [Image: {currentSlide?.code}]
@@ -126,7 +139,7 @@ function TATTest() {
             </div>
           ) : (
             <img 
-              src={`/tat/${currentSlide?.code || currentSlide?.image}.jpg`}
+              src={`/tat/${currentSlide?.code || currentSlide?.image}.png`}
               alt={`TAT Picture ${currentIndex + 1}`}
               className="test-image"
               onError={(e) => {
