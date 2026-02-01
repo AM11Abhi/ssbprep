@@ -333,12 +333,20 @@ html, body {
 }
 
 .card-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
 .card-meta {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
   font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -662,8 +670,10 @@ html, body {
 }
 
 .instruction-title {
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 100;
+  font-style: normal;
   font-size: 2.5rem;
-  font-weight: 700;
   text-transform: lowercase;
   margin-bottom: 32px;
 }
@@ -674,6 +684,10 @@ html, body {
 }
 
 .instruction-list li {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
   padding: 12px 0;
   font-size: 15px;
   color: var(--text-secondary);
@@ -685,6 +699,10 @@ html, body {
 }
 
 .instruction-duration {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
   display: inline-block;
   background-color: var(--bg-card);
   padding: 8px 16px;
@@ -747,6 +765,10 @@ html, body {
 }
 
 .about-content p {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
   font-size: 15px;
   color: var(--text-secondary);
   margin-bottom: 24px;
