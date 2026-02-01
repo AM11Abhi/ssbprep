@@ -28,7 +28,8 @@ function SRTTest() {
         const response = await fetch('http://localhost:3000/content/srt');
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
-        setSituations(data.situations || data);
+        console.log("SRT res:", data.items);
+        setSituations(data.items.map(item => item.situation) || data);
         setLoading(false);
       } catch (err) {
         // TEMP MOCK DATA — REMOVE WHEN BACKEND IS RUNNING

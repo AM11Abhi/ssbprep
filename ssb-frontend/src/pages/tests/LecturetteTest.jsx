@@ -38,7 +38,7 @@ function LecturetteTest() {
         const response = await fetch('http://localhost:3000/content/lecturette');
         if (response.ok) {
           const data = await response.json();
-          setTopics(data.topics || data || DEFAULT_TOPICS);
+          setTopics(data.topics.map(item => item.topic) || data || DEFAULT_TOPICS);
         } else {
           throw new Error('Failed to fetch');
         }
@@ -182,7 +182,7 @@ function LecturetteTest() {
             <div className="test-word" style={{ fontSize: '1.5rem' }}>
               {selectedTopic}
             </div>
-            <div style={{ marginTop: '32px', display: 'flex', gap: '16px' }}>
+            {/* <div style={{ marginTop: '32px', display: 'flex', gap: '16px' }}>
               {!isRecording ? (
                 <button className="btn btn-secondary" onClick={startRecording}>
                   Start Recording (Optional)
@@ -192,7 +192,7 @@ function LecturetteTest() {
                   Stop Recording
                 </button>
               )}
-            </div>
+            </div> */}
             {isRecording && (
               <p style={{ marginTop: '16px', color: 'var(--danger)', fontSize: '14px' }}>
                 ● Recording... (local only, not saved)

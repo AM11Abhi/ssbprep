@@ -4,6 +4,7 @@ async function wat(req, res, next) {
   try {
     const items = await contentService.getWAT();
     res.json({ test: "WAT", count: items.length, items });
+    console.log("Sent WAT items:", items.length);
   } catch (err) { next(err); }
 }
 
