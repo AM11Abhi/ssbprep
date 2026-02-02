@@ -5,6 +5,7 @@ import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
+import { api } from '../../utils/api.js';
 import { USE_MOCK_DATA, MOCK_TAT_DATA } from '../../data/mockTestData.js';
 
 const OBSERVE_SECONDS = 30;
@@ -26,7 +27,7 @@ function TATTest() {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        const response = await fetch('http://localhost:3000/content/tat');
+        const response = await fetch(api.tat());
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         console.log(data.items);

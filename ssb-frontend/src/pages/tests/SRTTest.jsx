@@ -5,6 +5,7 @@ import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
+import { api } from '../../utils/api.js';
 import { USE_MOCK_DATA, MOCK_SRT_DATA } from '../../data/mockTestData.js';
 
 const TOTAL_SECONDS = 30 * 60;
@@ -25,7 +26,7 @@ function SRTTest() {
   useEffect(() => {
     const fetchSituations = async () => {
       try {
-        const response = await fetch('http://localhost:3000/content/srt');
+        const response = await fetch(api.srt());
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         console.log("SRT res:", data.items);

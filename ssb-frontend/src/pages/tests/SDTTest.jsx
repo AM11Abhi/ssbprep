@@ -6,6 +6,7 @@ import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
 import { USE_MOCK_DATA, MOCK_SDT_DATA } from '../../data/mockTestData.js';
+import { api } from '../../utils/api.js';
 
 const TOTAL_SECONDS = 15 * 60;
 
@@ -30,7 +31,7 @@ function SDTTest() {
   useEffect(() => {
     const fetchHeadings = async () => {
       try {
-        const response = await fetch('http://localhost:3000/content/sdt');
+        const response = await fetch(api.sdt());
         if (response.ok) {
           const data = await response.json();
           setHeadings(data.headings || data || DEFAULT_HEADINGS);

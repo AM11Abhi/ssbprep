@@ -5,6 +5,7 @@ import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
+import { api } from '../../utils/api.js';
 import { USE_MOCK_DATA, MOCK_LECTURETTE_DATA } from '../../data/mockTestData.js';
 
 const PREP_SECONDS = 3 * 60;
@@ -35,7 +36,7 @@ function LecturetteTest() {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await fetch('http://localhost:3000/content/lecturette');
+        const response = await fetch(api.lecturette());
         if (response.ok) {
           const data = await response.json();
           setTopics(data.topics.map(item => item.topic) || data || DEFAULT_TOPICS);

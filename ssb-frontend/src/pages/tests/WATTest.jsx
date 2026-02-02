@@ -5,6 +5,7 @@ import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
+import { api } from '../../utils/api.js';
 import { USE_MOCK_DATA, MOCK_WAT_DATA } from '../../data/mockTestData.js';
 
 const SECONDS_PER_WORD = 15;
@@ -25,7 +26,7 @@ function WATTest() {
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const response = await fetch('http://localhost:3000/content/wat');
+        const response = await fetch(api.wat());
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         console.log("WAT res:", data.items);
