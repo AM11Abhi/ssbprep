@@ -50,6 +50,7 @@ function InstructionScreen({ title, instructions, duration, testRoute }) {
           startTest();
         }}
         onExit={() => setShowStartConfirm(false)}
+        startLabel={true}
       />
     </>
   );
