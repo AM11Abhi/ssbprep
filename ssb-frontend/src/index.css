@@ -521,8 +521,9 @@ html, body {
 }
 
 .test-image {
+  width: 500px;
   max-width: 90%;
-  max-height: 60vh;
+  max-height: 80vh;
   object-fit: contain;
   border-radius: var(--radius-md);
 }

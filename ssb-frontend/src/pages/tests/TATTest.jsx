@@ -8,7 +8,7 @@ import usePreventBack from '../../hooks/usePreventBack.js';
 import { api } from '../../utils/api.js';
 import { USE_MOCK_DATA, MOCK_TAT_DATA } from '../../data/mockTestData.js';
 
-const OBSERVE_SECONDS = 30;
+const OBSERVE_SECONDS = 3;
 const WRITE_SECONDS = 240;
 function TATTest() {
   const navigate = useNavigate();
