@@ -395,7 +395,6 @@ html, body {
 .test-word {
   font-size: 4rem;
   font-weight: 700;
-  text-transform: lowercase;
   letter-spacing: -0.02em;
 }
 

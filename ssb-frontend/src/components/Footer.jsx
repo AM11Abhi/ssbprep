@@ -5,8 +5,8 @@ function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <Link to="/about" className="footer-link">About</Link>
-        <a href="mailto:contact@ssbprep.com" className="footer-link">Contact</a>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
+        <a href="mailto:abhinav7268@gmail.com" className="footer-link">Contact</a>
+        <a href="https://github.com/AM11Abhi" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
         <span className="footer-copyright">© SSB Prep</span>
       </div>
     </footer>
