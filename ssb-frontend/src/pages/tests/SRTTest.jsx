@@ -47,6 +47,12 @@ function SRTTest() {
     };
     fetchSituations();
   }, []);
+  useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+}, [currentPage]);
 
   const totalPages = Math.ceil(situations.length / ITEMS_PER_PAGE);
   
@@ -72,6 +78,7 @@ function SRTTest() {
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage(prev => prev + 1);
+      
     }
   };
 
