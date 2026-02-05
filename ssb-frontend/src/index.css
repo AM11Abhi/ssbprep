@@ -521,9 +521,9 @@ html, body {
 }
 
 .test-image {
-  width: 500px;
-  max-width: 90%;
-  max-height: 80vh;
+  height: 65vh;
+  width: auto;
+  max-width: 80%;
   object-fit: contain;
   border-radius: var(--radius-md);
 }
@@ -789,6 +789,10 @@ html, body {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
+  }
+  .test-image {
+    height: 85vh;
+    max-width: 98%;
   }
   
   .hero-content {

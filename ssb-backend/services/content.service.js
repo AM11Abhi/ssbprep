@@ -23,11 +23,23 @@ async function getSRT() {
 }
 
 async function getTAT() {
-  const { rows } = await query(
-    `SELECT id, code, is_blank
-     FROM content.tat_images
-     ORDER BY is_blank, RANDOM()`
-  );
+  const { rows } = await query(`
+    (
+      SELECT id, code, is_blank
+      FROM content.tat_images
+      WHERE is_blank = false
+      ORDER BY RANDOM()
+      LIMIT 11
+    )
+    UNION ALL
+    (
+      SELECT id, code, is_blank
+      FROM content.tat_images
+      WHERE is_blank = true
+      LIMIT 1
+    )
+  `);
+
   return rows;
 }
 
