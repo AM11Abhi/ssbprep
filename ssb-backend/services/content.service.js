@@ -55,7 +55,13 @@ async function getLecturette() {
 }
 
 function getSDT() {
-  return ["Parents", "Teachers", "Friends", "Self", "Others"];
+  return ["What do you think of yourself?", 
+    "What do your parents think of you?", 
+    "What do your friends think of you?", 
+    "What do your teachers think of you?", 
+    "What sort of a person do you want to become in life?"
+
+  ];
 }
 
 module.exports = {
