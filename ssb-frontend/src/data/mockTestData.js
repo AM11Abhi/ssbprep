@@ -8,7 +8,7 @@
  */
 
 // Toggle this to disable mock data fallback
-export const USE_MOCK_DATA = true;
+export const USE_MOCK_DATA = false;
 
 // TEMP MOCK DATA — REMOVE WHEN BACKEND IS RUNNING
 export const MOCK_WAT_DATA = {

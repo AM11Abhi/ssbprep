@@ -9,7 +9,18 @@ const contentRoutes = require('./routes/content.routes');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow non-browser requests (Postman, curl, health checks)
+    if (!origin) return callback(null, true);
+
+    if (origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+
+    return callback(null, false);
+  },
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
