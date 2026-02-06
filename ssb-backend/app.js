@@ -24,4 +24,22 @@ app.get('/health', (req, res) => {
   });
 });
 
+// 404 handler (for unknown routes)
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+// Global error handler (MUST be last)
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+
+  const status = err.status || 500;
+  const message =
+    process.env.NODE_ENV === 'production'
+      ? 'Internal server error'
+      : err.message;
+
+  res.status(status).json({ error: message });
+});
+
 module.exports = app;
