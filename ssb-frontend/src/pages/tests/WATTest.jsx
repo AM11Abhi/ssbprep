@@ -6,6 +6,7 @@ import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
 import { api } from '../../utils/api.js';
+import LoadingScreen from '../../components/LoadingScreen.jsx';
 import { USE_MOCK_DATA, MOCK_WAT_DATA } from '../../data/mockTestData.js';
 
 const SECONDS_PER_WORD = 15;
@@ -71,14 +72,8 @@ function WATTest() {
   };
 
   if (loading) {
-    return (
-      <div className="test-container">
-        <div className="test-content">
-          <p className="text-description">Loading test content...</p>
-        </div>
-      </div>
-    );
-  }
+  return <LoadingScreen message="Loading test content..." />;
+}
 
   if (error) {
     return (

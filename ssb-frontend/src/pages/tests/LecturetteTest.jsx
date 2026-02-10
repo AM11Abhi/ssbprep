@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Timer from '../../components/Timer.jsx';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
+import LoadingScreen from '../../components/LoadingScreen.jsx';
 import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
@@ -110,13 +111,7 @@ function LecturetteTest() {
   };
 
   if (loading) {
-    return (
-      <div className="test-container">
-        <div className="test-content">
-          <p className="text-description">Loading test content...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen message="Loading test content..." />;
   }
 
   return (

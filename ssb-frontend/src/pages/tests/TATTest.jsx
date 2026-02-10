@@ -5,6 +5,7 @@ import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 import MockDataIndicator from '../../components/MockDataIndicator.jsx';
 import useFullscreen from '../../hooks/useFullscreen.js';
 import usePreventBack from '../../hooks/usePreventBack.js';
+import LoadingScreen from '../../components/LoadingScreen.jsx';
 import { api } from '../../utils/api.js';
 import { USE_MOCK_DATA, MOCK_TAT_DATA } from '../../data/mockTestData.js';
 
@@ -76,15 +77,9 @@ function TATTest() {
     navigate('/practice');
   };
 
-  if (loading) {
-    return (
-      <div className="test-container">
-        <div className="test-content">
-          <p className="text-description">Loading test content...</p>
-        </div>
-      </div>
-    );
-  }
+ if (loading) {
+  return <LoadingScreen message="Loading test content..." />;
+}
 
   if (error) {
     return (
