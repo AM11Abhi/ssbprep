@@ -16,14 +16,26 @@ pool.on('error', (err) => {
 // Log once when pool is created, not on every connection
 console.log('PostgreSQL pool initialized');
 
-// Optional: Test the connection once on startup
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('PostgreSQL connection failed:', err.message);
-  } else {
-    console.log('PostgreSQL connected successfully');
+// 🔵 Add retry logic
+async function testConnection(retries = 5, delay = 4000) {
+  while (retries) {
+    try {
+      await pool.query('SELECT NOW()');
+      console.log('PostgreSQL connected successfully');
+      return;
+    } catch (err) {
+      console.error(`DB connection failed. Retries left: ${retries - 1}`);
+      retries--;
+      if (!retries) {
+        console.error('PostgreSQL could not connect after retries.');
+        return;
+      }
+      await new Promise(res => setTimeout(res, delay));
+    }
   }
-});
+}
+
+testConnection();
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
