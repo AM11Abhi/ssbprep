@@ -22,24 +22,24 @@ Strict rules:
 Start the interview with a warm greeting and an introductory question based on their PIQ.`;
 
 /**
- * Builds the message array for the Gemini API.
+ * Builds the contents array for the Gemini generateContent() API.
  *
  * @param {object} piq - The candidate's Personal Information Questionnaire data.
  * @param {Array<{role: string, content: string}>} messages - Conversation history.
- * @returns {object} An object containing { systemPrompt, chatHistory }.
+ * @returns {object} An object containing { systemInstruction, contents }.
  */
 function buildInterviewPrompt(piq, messages) {
   const piqContext = `\n\nCandidate's PIQ Information:\n${JSON.stringify(piq, null, 2)}`;
-  const systemPrompt = SYSTEM_PROMPT + piqContext;
+  const systemInstruction = SYSTEM_PROMPT + piqContext;
 
-  // Format messages into Gemini-compatible history
+  // Format messages into Gemini-compatible contents array
   // Gemini expects roles: 'user' and 'model'
-  const chatHistory = messages.map((msg) => ({
+  const contents = messages.map((msg) => ({
     role: msg.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: msg.content }],
   }));
 
-  return { systemPrompt, chatHistory };
+  return { systemInstruction, contents };
 }
 
 module.exports = { buildInterviewPrompt };

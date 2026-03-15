@@ -19,14 +19,15 @@ Structure your response clearly with these sections:
 3. **Preparation Suggestions** — Concrete, actionable tips for their real SSB interview.`;
 
 /**
- * Builds the prompt for generating post-interview preparation advice.
+ * Builds the contents array for generating post-interview preparation advice.
  *
  * @param {object} piq - The candidate's PIQ data.
  * @param {Array<{role: string, content: string}>} conversation - The full conversation history.
- * @returns {object} An object containing { systemPrompt, conversationText }.
+ * @returns {object} An object containing { systemInstruction, contents }.
  */
 function buildFeedbackPrompt(piq, conversation) {
   const piqSummary = `\n\nCandidate's PIQ Information:\n${JSON.stringify(piq, null, 2)}`;
+  const systemInstruction = FEEDBACK_SYSTEM_PROMPT + piqSummary;
 
   const conversationText = conversation
     .map((msg) => {
@@ -35,9 +36,12 @@ function buildFeedbackPrompt(piq, conversation) {
     })
     .join('\n');
 
-  const systemPrompt = FEEDBACK_SYSTEM_PROMPT + piqSummary;
+  // Send the entire conversation as a single user message for analysis
+  const contents = [
+    { role: 'user', parts: [{ text: `Here is the interview transcript:\n\n${conversationText}\n\nPlease provide preparation advice based on this interview.` }] },
+  ];
 
-  return { systemPrompt, conversationText };
+  return { systemInstruction, contents };
 }
 
 module.exports = { buildFeedbackPrompt };
