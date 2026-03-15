@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const contentRoutes = require('./routes/content.routes');
+const interviewRoutes = require('./routes/interview.routes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/content', contentRoutes);
+app.use('/interview', interviewRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
