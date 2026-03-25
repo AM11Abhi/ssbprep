@@ -763,6 +763,427 @@ html, body {
   border-color: var(--accent-olive);
 }
 
+/* PIQ Form */
+.piq-section {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.piq-section-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.piq-section-placeholder {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.piq-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-bottom: 40px;
+}
+
+.piq-saved-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+}
+
+/* PIQ Form — section title with larger spacing */
+.piq-section-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* PIQ Fields Grid — 2 columns, responsive */
+.piq-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.piq-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Spans both columns */
+.piq-field--wide {
+  grid-column: span 2;
+}
+
+.piq-label {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* Inputs + Selects — matches reflection-textarea style */
+.piq-input {
+  width: 100%;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.piq-input::placeholder {
+  color: var(--text-muted);
+}
+
+.piq-input:focus {
+  border-color: var(--accent-olive);
+}
+
+/* Select-specific — remove default arrow styling on dark bg */
+.piq-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a0a0a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.piq-select option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Age auto-display box */
+.piq-age-display {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--text-primary);
+  min-height: 41px;
+  display: flex;
+  align-items: center;
+}
+
+.piq-age-placeholder {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Interview Start Screen */
+.interview-start-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.interview-start-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.interview-start-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.interview-start-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Responsive — collapse PIQ grid to single column on small screens */
+@media (max-width: 600px) {
+  .piq-fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .piq-field--wide {
+    grid-column: span 1;
+  }
+
+  .interview-start-card {
+    padding: 32px 24px;
+  }
+
+  .piq-dynamic-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* PIQ Sub-sections (nested inside piq-section) */
+.piq-sub-section {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.piq-sub-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.piq-sub-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+/* Dynamic item header row (title + remove button) */
+.piq-dynamic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+/* Dynamic item card */
+.piq-dynamic-item {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.piq-dynamic-item:last-child {
+  margin-bottom: 0;
+}
+
+.piq-dynamic-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.piq-dynamic-item-label {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Add / Remove buttons */
+.piq-add-btn {
+  font-size: 13px;
+  padding: 6px 16px;
+}
+
+.piq-remove-btn {
+  background: none;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: background-color 0.15s ease;
+}
+
+.piq-remove-btn:hover {
+  background-color: var(--danger);
+  color: var(--text-primary);
+}
+
+/* Empty state hint */
+.piq-empty-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* Checkbox */
+.piq-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.piq-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-olive);
+  cursor: pointer;
+}
+
+/* PIQ Textarea */
+.piq-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* NCC Toggle buttons */
+.piq-toggle-group {
+  display: flex;
+  gap: 0;
+  width: fit-content;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.piq-toggle-btn {
+  background: var(--bg-secondary);
+  border: none;
+  color: var(--text-secondary);
+  padding: 10px 28px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.piq-toggle-btn:not(:last-child) {
+  border-right: 1px solid var(--border-color);
+}
+
+.piq-toggle-btn.active {
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.piq-toggle-btn:hover:not(.active) {
+  background-color: var(--bg-card);
+}
+
+/* Review Section */
+.review-section {
+  border: 1px solid var(--accent-olive);
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.review-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.review-card-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent-olive);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.review-row:last-child {
+  border-bottom: none;
+}
+
+.review-row > span:first-child {
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.review-value {
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.review-empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.review-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-list li {
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.review-list li:last-child {
+  border-bottom: none;
+}
+
+/* Submit button */
+.piq-submit-btn {
+  font-size: 15px;
+  padding: 12px 32px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 /* About Page */
 .about-content {
   max-width: 600px;
