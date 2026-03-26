@@ -4,7 +4,8 @@ async function chat(req, res, next) {
   try {
     const { piq, messages, userMessage } = req.body;
 
-    if (!piq || !messages || !userMessage) {
+    // userMessage can be "" on the first call (IO speaks first)
+    if (!piq || !messages || userMessage === undefined || userMessage === null) {
       return res.status(400).json({ error: 'Missing required fields: piq, messages, userMessage' });
     }
 

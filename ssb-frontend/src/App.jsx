@@ -17,6 +17,7 @@ import LecturetteTest from './pages/tests/LecturetteTest.jsx';
 import NotFound from './pages/NotFound.jsx';
 import InterviewPIQ from './pages/InterviewPIQ.jsx';
 import InterviewStart from './pages/InterviewStart.jsx';
+import InterviewChat from './pages/InterviewChat.jsx';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         
         <Route path="/interview/piq" element={<InterviewPIQ />} />
         <Route path="/interview/start" element={<InterviewStart />} />
+        <Route path="/interview/chat" element={<InterviewChat />} />
         
         <Route path="*" element={<NotFound />} />
       </Routes>
