@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { getPIQ } from '../utils/piqStorage.js';
 import { api } from '../utils/api.js';
 
+const MAX_QUESTIONS = 20;
+
+const CLOSING_MESSAGE =
+  'Alright, that will be all for today. It was good speaking with you. Thank you for your time — you may leave now.';
+
 /**
- * Returns a delay (ms) proportional to the response length,
- * simulating the IO "thinking" before answering.
- *   short  (<80 chars)  → 1000–1800ms
- *   medium (<200 chars) → 1800–2600ms
- *   long   (≥200 chars) → 2600–3600ms
+ * Dynamic thinking delay based on response length.
+ *   short  (<80 chars)  → 1.0–1.8s
+ *   medium (<200 chars) → 1.8–2.6s
+ *   long   (≥200 chars) → 2.6–3.6s
  */
 function thinkingDelay(text) {
   const len = text?.length ?? 0;
@@ -19,20 +23,33 @@ function thinkingDelay(text) {
 
 function InterviewChat() {
   const navigate = useNavigate();
-  const [piq, setPiq]           = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [input, setInput]       = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const chatEndRef = useRef(null);
-  const inputRef   = useRef(null);
+  const [piq, setPiq]                     = useState(null);
+  const [messages, setMessages]           = useState([]);
+  const [input, setInput]                 = useState('');
+  const [isLoading, setIsLoading]         = useState(false);
+  const [questionCount, setQuestionCount] = useState(0); 
+  const [isInterviewEnded, setIsInterviewEnded] = useState(false);
+  const [isFetchingFeedback, setIsFetchingFeedback] = useState(false);
 
-  // ── Auto-scroll whenever messages or loading state changes ──
+  const chatEndRef       = useRef(null);
+  const inputRef         = useRef(null);
+  // Ref keeps the count in sync for immediate reads (avoids stale closure)
+  const questionCountRef = useRef(0); 
+  // Guards against React Strict Mode double-invoking the mount effect
+  const hasFetchedRef    = useRef(false);
+  // Snapshot of the conversation to send to feedback API
+  const feedbackSnapshotRef = useRef([]);
+
+  // ── Auto-scroll on any state change ──
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
+  }, [messages, isLoading, isInterviewEnded]);
 
-  // ── Load PIQ on mount; redirect if missing ──
+  // ── Load PIQ on mount; redirect to start if missing ──
   useEffect(() => {
+    if (hasFetchedRef.current) return;
+    hasFetchedRef.current = true;
+
     const savedPiq = getPIQ();
     if (!savedPiq) {
       navigate('/interview/start');
@@ -42,7 +59,19 @@ function InterviewChat() {
     fireFirstMessage(savedPiq);
   }, []);
 
-  // ── Fires an empty userMessage so the IO produces the opening question ──
+  // ── Appends an assistant message and increments question count ──
+  // Returns the NEW count so callers can check the limit immediately.
+  const appendAssistantMessage = (content, isError = false) => {
+    setMessages((prev) => [...prev, { role: 'assistant', content, isError }]);
+    if (!isError) {
+      questionCountRef.current += 1;
+      setQuestionCount(questionCountRef.current);
+      return questionCountRef.current;
+    }
+    return questionCountRef.current;
+  };
+
+  // ── Fires empty userMessage so IO produces opening question ──
   const fireFirstMessage = async (piqData) => {
     setIsLoading(true);
     try {
@@ -53,32 +82,74 @@ function InterviewChat() {
       });
       if (!res.ok) throw new Error('Server error');
       const data = await res.json();
-
-      // Apply a small thinking delay even for the first message
       await new Promise((r) => setTimeout(r, thinkingDelay(data.reply)));
-      setMessages([{ role: 'assistant', content: data.reply }]);
+      appendAssistantMessage(data.reply);
     } catch {
-      setMessages([{
-        role: 'assistant',
-        content: 'Good morning. I am the Interviewing Officer. Please introduce yourself.',
-      }]);
+      appendAssistantMessage(
+        'Good morning. I am the Interviewing Officer. Please introduce yourself.',
+      );
     } finally {
       setIsLoading(false);
       inputRef.current?.focus();
     }
   };
 
+  // ── End the interview: append ONLY the closing message, lock input ──
+  // Does NOT call backend, does NOT navigate automatically.
+  const endInterview = (conversationSnapshot) => {
+    feedbackSnapshotRef.current = conversationSnapshot;
+    setIsInterviewEnded(true);
+    setMessages((prev) => [...prev, { role: 'assistant', content: CLOSING_MESSAGE }]);
+  };
+
+  // ── "View Preparation Advice" button handler ──
+  // Calls /interview/feedback on demand, then navigates.
+  const handleViewFeedback = async () => {
+    setIsFetchingFeedback(true);
+    try {
+      const res = await fetch(api.interviewFeedback(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          piq,
+          conversation: feedbackSnapshotRef.current,
+        }),
+      });
+      if (!res.ok) throw new Error('Server error');
+      const data = await res.json();
+      navigate('/interview/complete', { state: { feedback: data.advice } });
+    } catch {
+      navigate('/interview/complete', {
+        state: {
+          feedback:
+            '**Topics Covered**\nThe interview covered various aspects of your background and experience.\n\n**Areas to Reflect On**\nWe were unable to generate detailed feedback at this time.\n\n**Preparation Suggestions**\nReview your PIQ answers, practice structured responses, and prepare specific examples for each topic.',
+        },
+      });
+    }
+    // isFetchingFeedback stays true — we navigate away anyway
+  };
+
   // ── Send a user message ──
   const handleSend = async () => {
     const text = input.trim();
-    if (!text || isLoading || !piq) return;
+    if (!text || isLoading || !piq || isInterviewEnded) return;
 
-    const userMsg = { role: 'user', content: text };
-    // Snapshot history *before* appending user msg (service appends it server-side)
     const historyBeforeSend = [...messages];
-
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev, { role: 'user', content: text }]);
     setInput('');
+
+    // ── FINAL TURN CHECK ──
+    // If this is the last allowed user message, skip the LLM call entirely.
+    // Show the closing message directly — no extra AI question generated.
+    if (questionCountRef.current >= MAX_QUESTIONS - 1) {
+      const snapshot = [
+        ...historyBeforeSend,
+        { role: 'user', content: text },
+      ];
+      endInterview(snapshot);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -94,9 +165,8 @@ function InterviewChat() {
       if (!res.ok) throw new Error('Server error');
       const data = await res.json();
 
-      // Dynamic delay before revealing the reply — feels like real thinking
       await new Promise((r) => setTimeout(r, thinkingDelay(data.reply)));
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
+      appendAssistantMessage(data.reply);
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -104,17 +174,18 @@ function InterviewChat() {
       ]);
     } finally {
       setIsLoading(false);
-      inputRef.current?.focus();
+      if (!isInterviewEnded) inputRef.current?.focus();
     }
   };
 
   const handleKeyDown = (e) => {
-    // Enter sends; Shift+Enter inserts a newline
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
+
+  const inputDisabled = isLoading || !piq || isInterviewEnded;
 
   return (
     <div className="chat-page">
@@ -132,7 +203,11 @@ function InterviewChat() {
         <div className="chat-header-center">
           <div className="chat-header-title">SSB Interview Simulation</div>
           <div className="chat-header-sub">
-            {isLoading ? 'Interviewing Officer is thinking…' : 'Interviewing Officer'}
+            {isInterviewEnded
+              ? 'Interview Complete'
+              : isLoading
+              ? 'Interviewing Officer is thinking…'
+              : `Interviewing Officer · Q ${questionCount}/${MAX_QUESTIONS}`}
           </div>
         </div>
         <div className="chat-header-right" />
@@ -141,7 +216,7 @@ function InterviewChat() {
       {/* ── Chat Area ── */}
       <div className="chat-messages">
 
-        {/* Typing indicator — initial load (no messages yet) */}
+        {/* Typing indicator — initial load */}
         {messages.length === 0 && isLoading && (
           <div className="chat-bubble-row chat-bubble-row--io">
             <div className="chat-avatar">IO</div>
@@ -172,7 +247,7 @@ function InterviewChat() {
           </div>
         ))}
 
-        {/* Typing indicator — waiting for reply after user message */}
+        {/* Typing indicator — waiting for reply */}
         {isLoading && messages.length > 0 && (
           <div className="chat-bubble-row chat-bubble-row--io">
             <div className="chat-avatar">IO</div>
@@ -184,6 +259,20 @@ function InterviewChat() {
           </div>
         )}
 
+        {/* End-of-interview block — divider + action button */}
+        {isInterviewEnded && (
+          <div className="chat-end-block">
+            <div className="chat-end-notice">Interview session ended</div>
+            <button
+              className="btn btn-primary chat-feedback-btn"
+              onClick={handleViewFeedback}
+              disabled={isFetchingFeedback}
+            >
+              {isFetchingFeedback ? 'Generating advice…' : 'View Preparation Advice →'}
+            </button>
+          </div>
+        )}
+
         <div ref={chatEndRef} />
       </div>
 
@@ -192,17 +281,23 @@ function InterviewChat() {
         <textarea
           ref={inputRef}
           className="chat-input"
-          placeholder={isLoading ? 'Interviewing Officer is thinking…' : 'Type your response… (Enter to send, Shift+Enter for new line)'}
+          placeholder={
+            isInterviewEnded
+              ? 'Interview has ended'
+              : isLoading
+              ? 'Interviewing Officer is thinking…'
+              : 'Type your response… (Enter to send, Shift+Enter for new line)'
+          }
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           rows={1}
-          disabled={isLoading || !piq}
+          disabled={inputDisabled}
         />
         <button
           className="chat-send-btn"
           onClick={handleSend}
-          disabled={!input.trim() || isLoading || !piq}
+          disabled={!input.trim() || inputDisabled}
         >
           Send
         </button>
