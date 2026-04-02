@@ -62,8 +62,11 @@ function geminiToOpenAIMessages(systemInstruction, contents) {
  * @param {number} [options.maxOutputTokens=300] - Max tokens for the response.
  * @returns {Promise<string>} The model's response text.
  */
+const MAX_OUTPUT_TOKENS = 1200; // Hard ceiling — prevents runaway cost
+
 async function chat(systemInstruction, contents, options = {}) {
-  const maxTokens = options.maxOutputTokens || 300;
+  // Clamp: default 300 for chat, 1024 for feedback, never above 1200
+  const maxTokens = Math.min(options.maxOutputTokens || 300, MAX_OUTPUT_TOKENS);
 
   if (LLM_PROVIDER === 'groq') {
     return chatGroq(systemInstruction, contents, maxTokens);
@@ -71,6 +74,7 @@ async function chat(systemInstruction, contents, options = {}) {
 
   return chatGemini(systemInstruction, contents, maxTokens);
 }
+
 
 // --- Gemini implementation ---
 async function chatGemini(systemInstruction, contents, maxTokens) {

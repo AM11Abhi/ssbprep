@@ -10,9 +10,12 @@ const llmService = require('./llm.service');
  * @param {string} userMessage - The candidate's latest message.
  * @returns {Promise<string>} The AI interviewer's next question.
  */
+const MAX_HISTORY = 25; // Keep only last N messages to control token cost
+
 async function getNextQuestion(piq, messages, userMessage) {
-  // Add the user's new message to history
-  const updatedMessages = [...messages, { role: 'user', content: userMessage }];
+  // Add user message, then trim to the last MAX_HISTORY entries
+  const updatedMessages = [...messages, { role: 'user', content: userMessage }]
+    .slice(-MAX_HISTORY);
 
   // Build prompt — returns { systemInstruction, contents }
   const { systemInstruction, contents } = buildInterviewPrompt(piq, updatedMessages);
@@ -22,6 +25,7 @@ async function getNextQuestion(piq, messages, userMessage) {
 
   return response;
 }
+
 
 /**
  * Generates preparation advice after the interview ends.

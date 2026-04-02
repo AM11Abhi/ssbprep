@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 const contentRoutes = require('./routes/content.routes');
 const interviewRoutes = require('./routes/interview.routes');
@@ -22,8 +21,9 @@ app.use(cors({
     return callback(null, false);
   },
 }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// 10kb limit prevents large-payload abuse on all routes
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Routes
 app.use('/content', contentRoutes);
@@ -44,9 +44,16 @@ app.use((req, res) => {
 
 // Global error handler (MUST be last)
 app.use((err, req, res, next) => {
-  console.error('Error:', err.message);
+  const status = err.status || err.statusCode || 500;
 
-  const status = err.status || 500;
+  // Log payload-too-large rejections explicitly
+  if (status === 413) {
+    console.warn(`[PAYLOAD REJECTED] ${req.method} ${req.path} — body too large from IP ${req.ip}`);
+    return res.status(413).json({ error: 'Request too large. Maximum payload size is 10kb.' });
+  }
+
+  console.error(`[ERROR] ${status} — ${err.message}`);
+
   const message =
     process.env.NODE_ENV === 'production'
       ? 'Internal server error'
