@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import ModeSelectDialog from '../components/ModeSelectDialog.jsx';
 import { getPIQ, clearPIQ } from '../utils/piqStorage.js';
+import { setInterviewMode } from '../utils/interviewMode.js';
 
 function InterviewStart() {
   const navigate = useNavigate();
   const savedPiq = getPIQ();
+  const [showModeDialog, setShowModeDialog] = useState(false);
 
   // If no PIQ saved, redirect to the form immediately
   useEffect(() => {
@@ -14,8 +17,15 @@ function InterviewStart() {
     }
   }, [savedPiq, navigate]);
 
-  const handleContinue = () => {
-    // Placeholder — will navigate to interview chat in Phase 5
+  // "Start Interview" opens the mode selection dialog
+  const handleStartClick = () => {
+    setShowModeDialog(true);
+  };
+
+  // User selected a mode → save it and navigate to chat
+  const handleModeSelect = (mode) => {
+    setInterviewMode(mode);
+    setShowModeDialog(false);
     navigate('/interview/chat');
   };
 
@@ -52,7 +62,11 @@ function InterviewStart() {
           </p>
 
           <div className="interview-start-actions">
-            <button className="btn btn-primary interview-start-btn" onClick={handleContinue}>
+            <button
+              className="btn btn-primary interview-start-btn"
+              onClick={handleStartClick}
+              id="start-interview-btn"
+            >
               Start Interview
             </button>
             <button className="btn btn-ghost interview-start-btn" onClick={handleEditPiq}>
@@ -64,6 +78,13 @@ function InterviewStart() {
           </div>
         </div>
       </div>
+
+      {/* Mode selection dialog — opens on Start Interview click */}
+      <ModeSelectDialog
+        isOpen={showModeDialog}
+        onSelect={handleModeSelect}
+        onClose={() => setShowModeDialog(false)}
+      />
     </>
   );
 }
