@@ -31,6 +31,12 @@ const tests = [
     title: 'Self Description Test (SDT)',
     meta: ['5 standard headings'],
     route: '/practice/sdt'
+  },
+  {
+    id: 'interview',
+    title: 'Personal Interview',
+    meta: ['AI Interviewing Officer', '20 questions based on PIQ', 'Voice & Chat modes'],
+    route: '/interview/start'
   }
 ];
 
