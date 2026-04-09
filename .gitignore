@@ -48,3 +48,7 @@ coverage/
 # Misc
 # ========================
 *.tsbuildinfo
+WORKFLOW.md
+ai_guidelines.md
+context.md
+test-chat.js

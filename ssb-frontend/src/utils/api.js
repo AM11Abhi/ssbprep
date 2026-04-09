@@ -6,4 +6,6 @@ export const api = {
   tat: () => `${API_BASE_URL}/content/tat`,
   sdt: () => `${API_BASE_URL}/content/sdt`,
   lecturette: () => `${API_BASE_URL}/content/lecturette`,
-};
+  interviewChat: () => `${API_BASE_URL}/interview/chat`,
+  interviewFeedback: () => `${API_BASE_URL}/interview/feedback`,
+};

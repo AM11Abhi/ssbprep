@@ -763,6 +763,427 @@ html, body {
   border-color: var(--accent-olive);
 }
 
+/* PIQ Form */
+.piq-section {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.piq-section-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.piq-section-placeholder {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.piq-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-bottom: 40px;
+}
+
+.piq-saved-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+}
+
+/* PIQ Form — section title with larger spacing */
+.piq-section-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* PIQ Fields Grid — 2 columns, responsive */
+.piq-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.piq-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Spans both columns */
+.piq-field--wide {
+  grid-column: span 2;
+}
+
+.piq-label {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* Inputs + Selects — matches reflection-textarea style */
+.piq-input {
+  width: 100%;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.piq-input::placeholder {
+  color: var(--text-muted);
+}
+
+.piq-input:focus {
+  border-color: var(--accent-olive);
+}
+
+/* Select-specific — remove default arrow styling on dark bg */
+.piq-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a0a0a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.piq-select option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Age auto-display box */
+.piq-age-display {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--text-primary);
+  min-height: 41px;
+  display: flex;
+  align-items: center;
+}
+
+.piq-age-placeholder {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Interview Start Screen */
+.interview-start-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.interview-start-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.interview-start-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.interview-start-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Responsive — collapse PIQ grid to single column on small screens */
+@media (max-width: 600px) {
+  .piq-fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .piq-field--wide {
+    grid-column: span 1;
+  }
+
+  .interview-start-card {
+    padding: 32px 24px;
+  }
+
+  .piq-dynamic-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* PIQ Sub-sections (nested inside piq-section) */
+.piq-sub-section {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.piq-sub-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.piq-sub-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+/* Dynamic item header row (title + remove button) */
+.piq-dynamic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+/* Dynamic item card */
+.piq-dynamic-item {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.piq-dynamic-item:last-child {
+  margin-bottom: 0;
+}
+
+.piq-dynamic-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.piq-dynamic-item-label {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Add / Remove buttons */
+.piq-add-btn {
+  font-size: 13px;
+  padding: 6px 16px;
+}
+
+.piq-remove-btn {
+  background: none;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: background-color 0.15s ease;
+}
+
+.piq-remove-btn:hover {
+  background-color: var(--danger);
+  color: var(--text-primary);
+}
+
+/* Empty state hint */
+.piq-empty-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* Checkbox */
+.piq-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.piq-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-olive);
+  cursor: pointer;
+}
+
+/* PIQ Textarea */
+.piq-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* NCC Toggle buttons */
+.piq-toggle-group {
+  display: flex;
+  gap: 0;
+  width: fit-content;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.piq-toggle-btn {
+  background: var(--bg-secondary);
+  border: none;
+  color: var(--text-secondary);
+  padding: 10px 28px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.piq-toggle-btn:not(:last-child) {
+  border-right: 1px solid var(--border-color);
+}
+
+.piq-toggle-btn.active {
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.piq-toggle-btn:hover:not(.active) {
+  background-color: var(--bg-card);
+}
+
+/* Review Section */
+.review-section {
+  border: 1px solid var(--accent-olive);
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.review-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.review-card-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent-olive);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.review-row:last-child {
+  border-bottom: none;
+}
+
+.review-row > span:first-child {
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.review-value {
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.review-empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.review-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-list li {
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.review-list li:last-child {
+  border-bottom: none;
+}
+
+/* Submit button */
+.piq-submit-btn {
+  font-size: 15px;
+  padding: 12px 32px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 /* About Page */
 .about-content {
   max-width: 600px;
@@ -911,4 +1332,506 @@ html, body {
     width: 150px;
     height: 166px;
   }
+}
+
+/* ════════════════════════════════
+   Chat Interface (Phase 5)
+════════════════════════════════ */
+
+/* Full-page layout — no Navbar, uses 100dvh */
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-height: 100dvh;
+  background-color: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.chat-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  padding: 14px 20px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.chat-header-center {
+  text-align: center;
+}
+
+.chat-header-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.chat-header-sub {
+  font-size: 12px;
+  color: var(--accent-olive);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.chat-back-btn {
+  font-size: 18px;
+  padding: 4px 10px;
+}
+
+/* ── Scrollable message area ── */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 4px;
+}
+
+/* ── Message row ── */
+.chat-bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.chat-bubble-row--io {
+  justify-content: flex-start;
+}
+
+.chat-bubble-row--user {
+  justify-content: flex-end;
+}
+
+/* IO avatar badge */
+.chat-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  transition: box-shadow 0.2s ease;
+}
+
+/* Pulsing glow on IO avatar while TTS is speaking */
+.chat-avatar--speaking {
+  animation: avatar-speak 1.4s ease-in-out infinite;
+}
+
+@keyframes avatar-speak {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent-olive-rgb, 107, 114, 60), 0.5); }
+  50%       { box-shadow: 0 0 0 8px rgba(var(--accent-olive-rgb, 107, 114, 60), 0); }
+}
+
+/* ── Chat bubbles ── */
+.chat-bubble {
+  max-width: min(72%, 560px);
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* IO bubble — left, dark card */
+.chat-bubble--io {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
+}
+
+/* User bubble — right, olive */
+.chat-bubble--user {
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  border-bottom-right-radius: 4px;
+}
+
+/* Error bubble — IO slot, warning style */
+.chat-bubble--error {
+  background-color: transparent;
+  border: 1px solid var(--danger);
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* ── Input bar ── */
+.chat-input-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 10px 16px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--text-primary);
+  resize: none;
+  outline: none;
+  min-height: 42px;     /* matches send/mic button height */
+  max-height: 180px;    /* grows up to here, then scrolls */
+  overflow-y: auto;
+  line-height: 1.5;
+  transition: border-color 0.15s ease;
+}
+
+.chat-input::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-input:focus {
+  border-color: var(--accent-olive);
+}
+
+.chat-send-btn {
+  flex-shrink: 0;
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+  height: 42px;
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  background-color: var(--accent-olive-dark);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Mic button (voice mode) ── */
+.mic-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mic-btn:hover:not(:disabled) {
+  border-color: var(--accent-olive);
+  background-color: var(--bg-secondary);
+}
+
+.mic-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Pulsing red ring while listening */
+.mic-btn--listening {
+  background-color: rgba(220, 38, 38, 0.15);
+  border-color: #dc2626;
+  animation: mic-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.35); }
+  50%       { box-shadow: 0 0 0 7px rgba(220, 38, 38, 0); }
+}
+
+/* ── Voice unsupported banner ── */
+.voice-unsupported-banner {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+  font-size: 13px;
+  padding: 10px 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .chat-header {
+    padding: 12px 14px;
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+    font-size: 13px;
+  }
+
+  .chat-input-bar {
+    padding: 10px 12px;
+  }
+}
+
+/* ── Typing indicator ── */
+.chat-thinking {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 18px;
+  min-width: 56px;
+}
+
+.chat-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
+  animation: chat-bounce 1.2s ease-in-out infinite;
+}
+
+.chat-dot:nth-child(2) { animation-delay: 0.2s; }
+.chat-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes chat-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* End-of-interview block — divider + "View Preparation Advice" button */
+.chat-end-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 8px;
+}
+
+.chat-end-notice {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 6px 18px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  letter-spacing: 0.04em;
+}
+
+.chat-feedback-btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 28px;
+}
+
+/* ════════════════════════════════
+   Interview Complete Page
+════════════════════════════════ */
+
+.complete-header {
+  margin-bottom: 40px;
+}
+
+.complete-badge {
+  display: inline-block;
+  background-color: var(--accent-olive);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+}
+
+/* Section cards */
+.complete-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.complete-section-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.complete-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.complete-section-title span {
+  font-size: 18px;
+}
+
+.complete-section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.complete-section-list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.complete-section-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--accent-olive);
+  font-weight: 700;
+}
+
+/* Raw fallback text */
+.complete-raw-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* Action buttons */
+.complete-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Fallback screen (no state) */
+.complete-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 20px;
+  text-align: center;
+}
+
+/* ════════════════════════════════
+   Mode Select Dialog
+════════════════════════════════ */
+
+/* Wider than the default ConfirmDialog */
+.mode-dialog {
+  max-width: 480px;
+  width: 92%;
+}
+
+/* Vertical stack of mode option buttons */
+.mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 24px 0 16px;
+}
+
+/* Each mode is a full-width button-like card */
+.mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding: 16px 20px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.12s ease;
+}
+
+.mode-card:hover {
+  border-color: var(--accent-olive);
+  background-color: var(--bg-card);
+  transform: translateY(-1px);
+}
+
+.mode-card:active {
+  transform: translateY(0);
+}
+
+.mode-card-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.mode-card-title {
+  font-family: "Baloo Bhai 2", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.mode-card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Small hint below the cards */
+.mode-dialog-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  text-align: center;
+  margin-top: 4px;
 }

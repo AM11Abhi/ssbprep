@@ -15,6 +15,10 @@ import SRTTest from './pages/tests/SRTTest.jsx';
 import SDTTest from './pages/tests/SDTTest.jsx';
 import LecturetteTest from './pages/tests/LecturetteTest.jsx';
 import NotFound from './pages/NotFound.jsx';
+import InterviewPIQ from './pages/InterviewPIQ.jsx';
+import InterviewStart from './pages/InterviewStart.jsx';
+import InterviewChat from './pages/InterviewChat.jsx';
+import InterviewComplete from './pages/InterviewComplete.jsx';
 
 function App() {
   return (
@@ -36,6 +40,11 @@ function App() {
         <Route path="/test/srt" element={<SRTTest />} />
         <Route path="/test/sdt" element={<SDTTest />} />
         <Route path="/test/lecturette" element={<LecturetteTest />} />
+        
+        <Route path="/interview/piq" element={<InterviewPIQ />} />
+        <Route path="/interview/start" element={<InterviewStart />} />
+        <Route path="/interview/chat" element={<InterviewChat />} />
+        <Route path="/interview/complete" element={<InterviewComplete />} />
         
         <Route path="*" element={<NotFound />} />
       </Routes>
