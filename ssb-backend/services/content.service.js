@@ -54,14 +54,34 @@ async function getLecturette() {
   return rows;
 }
 
+const llmService = require('./llm.service');
+const { WAT_FEEDBACK_PROMPT } = require('../prompts/watFeedbackPrompt');
+
 function getSDT() {
   return ["What do you think of yourself?", 
     "What do your parents think of you?", 
     "What do your friends think of you?", 
     "What do your teachers think of you?", 
     "What sort of a person do you want to become in life?"
-
   ];
+}
+
+async function generateWATFeedback(responses) {
+  // Format responses nicely for the prompt
+  const formattedResponses = responses.map((r, i) => `${i + 1}. Word: "${r.word}" | Sentence: "${r.response}"`).join('\n');
+  const userMessage = {
+    role: 'user',
+    parts: [{ text: `Here are my WAT responses:\n\n${formattedResponses}` }]
+  };
+  
+  // Ask for feedback
+  const advice = await llmService.chat(
+    WAT_FEEDBACK_PROMPT,
+    [userMessage],
+    { maxOutputTokens: 1200 } // give it enough room to reply with good feedback
+  );
+  
+  return advice;
 }
 
 module.exports = {
@@ -70,4 +90,5 @@ module.exports = {
   getTAT,
   getLecturette,
   getSDT,
+  generateWATFeedback,
 };
