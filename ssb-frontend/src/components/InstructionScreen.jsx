@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Navbar from './Navbar.jsx';
 import ConfirmDialog from './ConfirmDialog.jsx';
 
-function InstructionScreen({ title, instructions, duration, testRoute }) {
+function InstructionScreen({ title, instructions, duration, testRoute, customStartHandler }) {
   const navigate = useNavigate();
   const [showStartConfirm, setShowStartConfirm] = useState(false);
 
@@ -16,7 +16,13 @@ function InstructionScreen({ title, instructions, duration, testRoute }) {
     navigate(testRoute);
   };
 
-  const handleStartTest = () => setShowStartConfirm(true);
+  const handleStartTest = () => {
+    if (customStartHandler) {
+      customStartHandler();
+    } else {
+      setShowStartConfirm(true);
+    }
+  };
 
   return (
     <>

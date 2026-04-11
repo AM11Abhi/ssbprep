@@ -36,4 +36,18 @@ async function lecturette(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { wat, srt, tat, sdt, lecturette };
+async function watFeedback(req, res, next) {
+  try {
+    const { responses } = req.body;
+    if (!responses || !Array.isArray(responses)) {
+      return res.status(400).json({ error: 'Missing or invalid "responses" array in request body.' });
+    }
+
+    // Pass the payload directly to the service
+    const advice = await contentService.generateWATFeedback(responses);
+    console.log(`Generated WAT feedback for ${responses.length} responses.`);
+    res.json({ advice });
+  } catch (err) { next(err); }
+}
+
+module.exports = { wat, srt, tat, sdt, lecturette, watFeedback };

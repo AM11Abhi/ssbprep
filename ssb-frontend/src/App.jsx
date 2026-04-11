@@ -10,6 +10,7 @@ import SRTInstruction from './pages/instructions/SRTInstruction.jsx';
 import SDTInstruction from './pages/instructions/SDTInstruction.jsx';
 import LecturetteInstruction from './pages/instructions/LecturetteInstruction.jsx';
 import WATTest from './pages/tests/WATTest.jsx';
+import WATComplete from './pages/tests/WATComplete.jsx';
 import TATTest from './pages/tests/TATTest.jsx';
 import SRTTest from './pages/tests/SRTTest.jsx';
 import SDTTest from './pages/tests/SDTTest.jsx';
@@ -36,6 +37,7 @@ function App() {
         <Route path="/practice/lecturette" element={<LecturetteInstruction />} />
         
         <Route path="/test/wat" element={<WATTest />} />
+        <Route path="/test/wat/complete" element={<WATComplete />} />
         <Route path="/test/tat" element={<TATTest />} />
         <Route path="/test/srt" element={<SRTTest />} />
         <Route path="/test/sdt" element={<SDTTest />} />
